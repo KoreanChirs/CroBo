@@ -15,11 +15,13 @@ Given a single video frame, CroBo constructs a **global source view** and a **lo
 
 ---
 
-## Qualitative Results
-
-**Quantitative Results**
+## Quantitative Results
 
 ![Quantitative Results](figs/quan_score.png)
+
+---
+
+## Qualitative Results
 
 **Reconstruction**
 
