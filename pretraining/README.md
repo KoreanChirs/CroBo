@@ -20,20 +20,6 @@ pip install pandas
 pip install scikit-image
 ```
 
-## 3. Pre-training
-
-**Key files:**
-- `models_crobo.py` — CroBo model architecture (encoder, decoder, loss)
-- `main_pretrain_crobo.py` — training entry point (arguments, data loader, optimizer setup)
-- `engine_crobo.py` — per-epoch training loop
-- `util/kinetics_mfmae.py` — Kinetics-400 dataset with global/local crop augmentation
-- `pretrain_crobo.sh` — training launch script
-
-**Run:**
-```bash
-sh pretrain_crobo.sh
-```
-
 ## 2. Dataset
 
 We use Kinetics-400 for pre-training. Follow the steps below to download and prepare the dataset.
@@ -65,4 +51,18 @@ python data_preprocessing/class_organize.py
 
 ```bash
 python data_preprocessing/make_224scale.py
+```
+
+## 3. Pre-training
+
+**Key files:**
+- `models_crobo.py` — CroBo model architecture (encoder, decoder, loss)
+- `main_pretrain_crobo.py` — training entry point (arguments, data loader, optimizer setup)
+- `engine_crobo.py` — per-epoch training loop
+- `util/kinetics_mfmae.py` — Kinetics-400 dataset with global/local crop augmentation
+- `pretrain_crobo.sh` — training launch script
+
+**Run:**
+```bash
+sh pretrain_crobo.sh
 ```
