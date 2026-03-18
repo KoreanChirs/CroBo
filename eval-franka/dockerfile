@@ -1,0 +1,55 @@
+FROM [cortexbench docker image]
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates wget unzip git curl \
+    build-essential pkg-config libffi-dev \
+    patchelf libglfw3-dev \
+    libgl1-mesa-dev libgl1-mesa-glx libglew-dev libosmesa6-dev libglfw3 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PATH /opt/conda/envs/eai-vc/bin:$PATH
+
+RUN pip install --no-cache-dir cffi fasteners imageio glfw pyopengl
+
+WORKDIR /opt
+RUN git clone --branch v0.0.5 --recursive https://github.com/vikashplus/robohive.git && \
+    cd robohive && sed -i '/^[[:space:]]*'\''torch'\''[[:space:]]*,[[:space:]]*$/d' setup.py && \
+    sed -i '/^[[:space:]]*'\''torchvision'\''[[:space:]]*,[[:space:]]*$/d' setup.py
+WORKDIR /opt/robohive
+RUN pip install -e .
+
+WORKDIR /opt
+RUN pip install --no-cache-dir "pip==22.3.1"
+RUN git clone --branch eval https://github.com/facebookresearch/r3m.git && \
+    cd r3m && \
+    sed -i '/torch/d' setup.py
+
+WORKDIR /opt/r3m
+RUN pip install -e .
+WORKDIR /opt/r3m/evaluation
+RUN pip install -e .
+
+RUN python3 -c "import torch; assert torch.__version__ == '2.0.1+cu117'"
+
+RUN set -eu; \
+    mkdir -p /root/.r3m; \
+    wget -q -O /tmp/r3m_50.zip \
+      "https://huggingface.co/anayebi/mental-sim-models/resolve/main/r3m_50.zip?download=true"; \
+    unzip -q /tmp/r3m_50.zip -d /root/.r3m; \
+    rm -f /tmp/r3m_50.zip; \
+    if [ -f /root/.r3m/r3m_50/model.pt ]; then \
+        echo "R3M model.pt already in place"; \
+    elif [ -f /root/.r3m/model.pt ]; then \
+        mkdir -p /root/.r3m/r3m_50; \
+        mv /root/.r3m/model.pt /root/.r3m/r3m_50/model.pt; \
+    else \
+        echo "ERROR: model.pt not found after unzip"; \
+        find /root/.r3m -maxdepth 3 -type f -name "model.pt" -print; \
+        exit 1; \
+    fi; \
+    ls -lh /root/.r3m/r3m_50/model.pt; \
+    mv /root/.r3m/r3m_50 /root/.r3m/original_r3m
+
+RUN pip install --no-cache-dir wandb
+
+CMD ["/bin/bash"]
