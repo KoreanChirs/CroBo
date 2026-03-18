@@ -32,8 +32,10 @@ Make sure your process shows `C+G` before running full evaluations.
 
 ## 4. Evaluating a Custom Pre-trained ViT Model
 
+The necessary files for the steps below are provided in `r3m_modify/` in our repo.
+
 ### Step 1. Add `VC1Enc` class
-Inside `evaluation/r3meval/utils/obs_wrappers.py`, add the `VC1Enc` class. This class is extracted from CortexBench — refer to `vc1enc.py` in our repo.
+Inside `evaluation/r3meval/utils/obs_wrappers.py`, add the `VC1Enc` class. This class is extracted from CortexBench — refer to `r3m_modify/vc1enc.py` in our repo.
 
 ### Step 2. Add custom model loading branch
 In the load-related section of `evaluation/r3meval/utils/obs_wrappers.py`, add the following `elif` block:
@@ -50,10 +52,10 @@ elif "vc1" in load_path:
 ```
 
 ### Step 3. Add `custom_utils.py`
-Copy `custom_utils.py` from our repo to `evaluation/custom_utils.py` in the R3M repo.
+Copy `r3m_modify/custom_utils.py` from our repo to `evaluation/custom_utils.py` in the R3M repo.
 
 ### Step 4. Update the forward function
-Add the necessary lines from `forward.py` in our repo into the `forward` (encode_batch, observation) function in `evaluation/r3meval/utils/obs_wrappers.py`.
+Add the necessary lines from `r3m_modify/forward.py` in our repo into the `forward` (encode_batch, observation) function in `evaluation/r3meval/utils/obs_wrappers.py`.
 
 ### Step 5. Add model config and checkpoint
 - Place your custom checkpoint under `evaluation/custom_models/checkpoints/`
