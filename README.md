@@ -18,4 +18,5 @@ Contains the code for evaluating CroBo representations on the **DeepMind Control
 ---
 
 ## Paper
-> *Pixel-level Scene Understanding in One Token: Visual States Need What-is-Where Composition* (CVPR 2026 submission)
+> *Pixel-level Scene Understanding in One Token: Visual States Need What-is-Where Composition*
+> [arXiv:2603.13904](https://arxiv.org/abs/2603.13904)
