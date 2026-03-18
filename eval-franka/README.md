@@ -63,7 +63,7 @@ Add the necessary lines from `r3m_modify/forward.py` in our repo into the `forwa
 - **Always prefix the YAML filename with `vc1_`** (e.g., `vc1_crobo.yaml`). An example YAML is provided as `vc1_crobo.yaml` in our repo.
 
 ### Step 6. Copy vc_models from CortexBench
-Copy `eai-vc/vc_models/src/vc_models` (from CortexBench) into the `evaluation/` directory of the R3M repo so that the YAML-based loading functions work correctly.
+Copy `eai-vc/vc_models/src/vc_models` (from CortexBench) into the `evaluation/` directory of the R3M repo so that the loading functions which are used in the YAML file work correctly.
 
 ---
 
