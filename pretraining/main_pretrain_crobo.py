@@ -10,6 +10,7 @@ import numpy as np
 
 import torch
 import torch.backends.cudnn as cudnn
+from torch.utils.tensorboard import SummaryWriter
 
 import timm.optim.optim_factory as optim_factory
 
@@ -106,14 +107,9 @@ def main(args):
     else:
         sampler_train = torch.utils.data.RandomSampler(dataset_train)
 
-    if global_rank == 0 and not args.eval:
-        if args.log_dir.lower() == 'none':
-            log_writer = None
-        elif args.log_dir is not None:
-            os.makedirs(args.log_dir, exist_ok=True)
-            log_writer = logger.TensorboardLogger(log_dir=args.log_dir)
-        else:
-            log_writer = None
+    if global_rank == 0 and args.log_dir is not None:
+        os.makedirs(args.log_dir, exist_ok=True)
+        log_writer = SummaryWriter(log_dir = args.log_dir)
     else:
         log_writer = None
 
@@ -177,8 +173,6 @@ def main(args):
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
             data_loader_train.sampler.set_epoch(epoch)
-        if log_writer is not None and log_writer.logger_type() == 'tensorboard':
-            log_writer.set_step(epoch * num_training_steps_per_epoch)
         train_stats = train_one_epoch(
             model,
             data_loader_train,
@@ -216,10 +210,11 @@ def main(args):
             "epoch": epoch,
         }
 
-        if log_writer is not None and log_writer.logger_type() == 'tensorboard':
-            log_writer.flush()
-        with open(os.path.join(args.output_dir, "log.txt"), mode="a", encoding="utf-8") as f:
-            f.write(json.dumps(log_stats) + "\n")
+        if args.output_dir and misc.is_main_process():
+            if log_writer is not None:
+                log_writer.flush()
+            with open(os.path.join(args.output_dir, "log.txt"), mode = "a", encoding="utf-8") as f:
+                f.write(json.dumps(log_stats) + "\n")
 
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
