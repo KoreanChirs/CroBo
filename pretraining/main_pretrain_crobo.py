@@ -168,7 +168,7 @@ def main(args):
     args.epochs = args.epochs // args.repeated_sampling
     args.warmup_epochs = args.warmup_epochs // args.repeated_sampling
 
-    print(f"Start training for {args.epochs} epochs")
+    print(f"Start training for {args.epochs * args.repeated_sampling} epochs")
     start_time = time.time()
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:

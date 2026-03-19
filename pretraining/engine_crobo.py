@@ -28,7 +28,7 @@ def train_one_epoch(
 
     optimizer.zero_grad()
 
-    if log_writer is not None and log_writer.logger_type() == 'tensorboard':
+    if log_writer is not None:
         print("log_dir: {}".format(log_writer.log_dir))
 
     for data_iter_step, batches in enumerate(
@@ -75,10 +75,10 @@ def train_one_epoch(
         metric_logger.update(lr=lr)
 
         loss_value_reduce = misc.all_reduce_mean(loss_value)
-        if log_writer is not None and (data_iter_step + 1) % accum_iter == 0 and log_writer.logger_type() == 'tensorboard':
-            log_writer.update(loss=loss_value_reduce, head="train_loss")
-            log_writer.update(lr=lr, head="opt")
-            log_writer.set_step()
+        if log_writer is not None and (data_iter_step + 1) % accum_iter == 0:
+            epoch_1000x = int((data_iter_step / len(data_loader) + epoch) * 1000)
+            log_writer.add_scalar("train_loss", loss_value_reduce, epoch_1000x)
+            log_writer.add_scalar("lr", lr, epoch_1000x)
 
     metric_logger.synchronize_between_processes()
     print("Averaged stats:", metric_logger)
