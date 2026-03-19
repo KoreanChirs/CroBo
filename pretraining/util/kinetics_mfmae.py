@@ -60,7 +60,7 @@ class KineticsDataset(Dataset):
     ):
         super().__init__()
         self.root = root
-        with open(os.path.join(self.root, "labels", "label_1.0.pickle"), "rb") as f:
+        with open(os.path.join(self.root, "labels", "label_224_full_1.0.pickle"), "rb") as f:
             self.samples = pickle.load(f)
 
         self.crop = CroBoCrop()
