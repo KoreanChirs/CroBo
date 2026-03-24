@@ -25,7 +25,7 @@ Given a single video frame, CroBo constructs a **global source view** and a **lo
 
 **Reconstruction**
 
-![Reconstruction](figs/qual_recon.png)
+![Reconstruction](figs/qual_recon.png?raw=true)
 
 **Representation Trajectories**
 
