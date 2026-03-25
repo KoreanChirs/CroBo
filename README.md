@@ -7,6 +7,12 @@
 
 ---
 
+## News
+
+**[2026-03]** Our paper has been accepted at the **CVPR 2026 Workshop on Pixel-level Video Understanding in the Wild**! 🎉
+
+---
+
 ## Method
 
 ![Architecture](figs/architecture_main.png)
