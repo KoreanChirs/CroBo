@@ -3,7 +3,9 @@
 **CroBo** is a self-supervised visual representation learning framework for robotic agents. It encodes a scene into a single compact token that jointly captures the semantic identity and spatial location of scene elements (*what-is-where*), enabling effective downstream visuomotor policy learning.
 
 > *Pixel-level Scene Understanding in One Token: Visual States Need What-is-Where Composition*
-> [arXiv:2603.13904](https://arxiv.org/abs/2603.13904)
+
+[![arXiv](https://img.shields.io/badge/arXiv-2603.13904-b31b1b?style=flat&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2603.13904)
+[![Project Page](https://img.shields.io/badge/Project%20Page-CroBo-blue?style=flat&logo=github&logoColor=white)](https://seokminlee-chris.github.io/CroBo-ProjectPage/)
 
 ---
 
