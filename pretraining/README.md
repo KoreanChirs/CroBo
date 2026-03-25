@@ -66,3 +66,5 @@ python data_preprocessing/make_224scale.py
 ```bash
 sh pretrain_crobo.sh
 ```
+
+> **Note:** To reproduce our results, ensure that `[N_NODE] x [BATCH_SIZE_PER_GPU] x [ACCUM_ITER] = 1536`.
